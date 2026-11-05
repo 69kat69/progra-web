@@ -1,40 +1,239 @@
-const formLogin=document.getElementById("formularioLogin");
-const formRec=document.getElementById("formularioRecuperacion");
-const viewLogin=document.getElementById("vistaLogin");
-const viewRec=document.getElementById("vistaRecuperacion");
-const correo=document.getElementById("correo");
-const pass=document.getElementById("contrasena");
-const msgLogin=document.getElementById("mensajeLogin");
-const correoRec=document.getElementById("correoRecuperacion");
-const msgRec=document.getElementById("mensajeRecuperacion");
+// Inicio de sesión
+const formularioLogin = document.getElementById("formularioLogin");
 
-/** Comprueba el formato y longitud máxima del correo según RF_01 y RF_02. */
-function emailValid(value){const v=value.trim();return v.length<=254&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)}
-/** Muestra un error de campo accesible. */
-function fieldError(input,id,text){input.setAttribute("aria-invalid","true");document.getElementById(id).textContent=text}
-/** Borra el mensaje de error de un campo. */
-function clearError(input,id){input.removeAttribute("aria-invalid");document.getElementById(id).textContent=""}
-/** Alterna las vistas de inicio de sesión y recuperación. */
-function switchView(name){const login=name==="login";viewLogin.hidden=!login;viewRec.hidden=login;(login?correo:correoRec).focus()}
-document.querySelectorAll("[data-vista]").forEach(button=>button.addEventListener("click",()=>switchView(button.dataset.vista)));
+const correo = document.getElementById("correo");
 
-document.getElementById("botonMostrar").addEventListener("click",()=>{const show=pass.type==="password";pass.type=show?"text":"password";document.getElementById("botonMostrar").setAttribute("aria-label",show?"Ocultar contraseña":"Mostrar contraseña")});
-formLogin.addEventListener("submit",event=>{event.preventDefault();msgLogin.textContent="";msgLogin.className="message";clearError(correo,"errorCorreo");clearError(pass,"errorContrasena");
- if(!correo.value.trim())return fieldError(correo,"errorCorreo","Ingresa tu correo electrónico."),correo.focus();
- if(!emailValid(correo.value))return fieldError(correo,"errorCorreo","Ingresa un correo válido de hasta 254 caracteres."),correo.focus();
- if(!pass.value)return fieldError(pass,"errorContrasena","Ingresa tu contraseña."),pass.focus();
- if(pass.value.length<8||pass.value.length>64)return fieldError(pass,"errorContrasena","La contraseña debe tener de 8 a 64 caracteres."),pass.focus();
- msgLogin.textContent="El formato es válido. La autenticación estará disponible al integrar el servidor.";
+const contra = document.getElementById("contra");
+
+const mensajeLogin = document.getElementById("mensajeLogin");
+
+const vistaLogin = document.getElementById("vistaLogin");
+
+
+// Recuperación
+const formularioRecuperacion = document.getElementById("formularioRecuperacion");
+
+const correoRecuperacion = document.getElementById("correoRecuperacion");
+
+const mensajeRecuperacion = document.getElementById("mensajeRecuperacion");
+
+const vistaRecuperacion = document.getElementById("vistaRecuperacion");
+
+
+// Revisar correo
+function correoEsValido(valor) {
+  const correoLimpio = valor.trim();
+  const formatoCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  return correoLimpio.length <= 254 && formatoCorreo.test(correoLimpio);
+}
+
+
+// Mostrar error
+function mostrarError(campo, idError, texto) {
+  campo.setAttribute("aria-invalid", "true");
+  document.getElementById(idError).textContent = texto;
+}
+
+
+// Quitar error
+function quitarError(campo, idError) {
+  campo.removeAttribute("aria-invalid");
+  document.getElementById(idError).textContent = "";
+}
+
+
+// Cambiar de pantalla
+function cambiarVista(nombreVista) {
+  const mostrarLogin = nombreVista === "login";
+
+  vistaLogin.hidden = !mostrarLogin;
+  vistaRecuperacion.hidden = mostrarLogin;
+
+  if (mostrarLogin) {
+    correo.focus();
+  } else {
+    correoRecuperacion.focus();
+  }
+}
+
+
+// Botones para cambiar de pantalla
+document.querySelectorAll("[data-vista]").forEach((boton) => {
+  boton.addEventListener("click", () => {
+    cambiarVista(boton.dataset.vista);
+  });
 });
 
-/** Presenta el paso activo del flujo de recuperación RF_02. */
-function showStep(step){document.querySelectorAll(".step").forEach(panel=>panel.hidden=panel.dataset.step!==step);msgRec.textContent="";(step==="codigo"?document.getElementById("codigo"):step==="contrasena"?document.getElementById("nuevaContrasena"):correoRec).focus()}
-formRec.addEventListener("submit",event=>{event.preventDefault();clearError(correoRec,"errorCorreoRecuperacion");msgRec.textContent="";
- if(!correoRec.value.trim()||!emailValid(correoRec.value)){fieldError(correoRec,"errorCorreoRecuperacion",correoRec.value.trim()?"Ingresa un correo válido de hasta 254 caracteres.":"Ingresa el correo de tu cuenta.");correoRec.focus();return}
- showStep("codigo");msgRec.textContent="Vista previa: no se envió un correo. El envío real requiere integrar el servidor.";
+
+// Mostrar u ocultar contra
+function cambiarVisibilidadContra(campo, boton) {
+  const mostrar = campo.type === "password";
+
+  campo.type = mostrar ? "text" : "password";
+  boton.setAttribute(
+    "aria-label",
+    mostrar ? "Ocultar contraseña" : "Mostrar contraseña"
+  );
+}
+
+
+// Muestra u oculta la contraseña del inicio de sesión.
+document.getElementById("botonMostrar").addEventListener("click", (evento) => {
+  cambiarVisibilidadContra(contra, evento.currentTarget);
 });
-document.getElementById("botonValidarCodigo").addEventListener("click",()=>{const code=document.getElementById("codigo");clearError(code,"errorCodigo");if(!/^\d{6}$/.test(code.value)){fieldError(code,"errorCodigo","Ingresa los 6 dígitos del código.");code.focus();return}showStep("contrasena");msgRec.textContent="Vista previa: el código no se validó con un servidor."});
-document.getElementById("botonReenviar").addEventListener("click",()=>{msgRec.textContent="El reenvío del código se habilitará al integrar el servidor."});
-document.getElementById("botonMostrarNueva").addEventListener("click",()=>{const input=document.getElementById("nuevaContrasena"),show=input.type==="password";input.type=show?"text":"password";document.getElementById("botonMostrarNueva").setAttribute("aria-label",show?"Ocultar contraseña":"Mostrar contraseña")});
-document.getElementById("botonGuardarContrasena").addEventListener("click",()=>{const input=document.getElementById("nuevaContrasena");clearError(input,"errorNuevaContrasena");if(input.value.length<8||input.value.length>64||!/[A-Z]/.test(input.value)||!/[a-z]/.test(input.value)||!/[0-9]/.test(input.value)){fieldError(input,"errorNuevaContrasena","Usa de 8 a 64 caracteres, con mayúscula, minúscula y número.");input.focus();return}msgRec.textContent="Vista previa: la contraseña no se actualizó. Esta acción requiere integrar el servidor."});
-document.querySelectorAll("input").forEach(input=>input.addEventListener("input",()=>input.removeAttribute("aria-invalid")));
+
+
+// Validar el inicio de sesión
+formularioLogin.addEventListener("submit", (evento) => {
+  evento.preventDefault();
+
+  mensajeLogin.textContent = "";
+  quitarError(correo, "errorCorreo");
+  quitarError(contra, "errorContra");
+
+  if (!correo.value.trim()) {
+    mostrarError(correo, "errorCorreo", "Ingresa tu correo electrónico.");
+    correo.focus();
+    return;
+  }
+
+  if (!correoEsValido(correo.value)) {
+    mostrarError(correo, "errorCorreo", "Ingresa un correo válido de hasta 254 caracteres.");
+    correo.focus();
+    return;
+  }
+
+  if (!contra.value) {
+    mostrarError(contra, "errorContra", "Ingresa tu contraseña.");
+    contra.focus();
+    return;
+  }
+
+  if (contra.value.length < 8 || contra.value.length > 64) {
+    mostrarError(
+      contra,
+      "errorContra",
+      "La contraseña debe tener de 8 a 64 caracteres."
+    );
+    contra.focus();
+    return;
+  }
+
+  mensajeLogin.textContent = "Formato correcto.";
+});
+
+
+// Cambiar paso de recuperación
+function mostrarPasoRecuperacion(nombrePaso) {
+  const pasos = document.querySelectorAll(".step");
+
+  pasos.forEach((paso) => {
+    paso.hidden = paso.dataset.step !== nombrePaso;
+  });
+
+  mensajeRecuperacion.textContent = "";
+
+  if (nombrePaso === "codigo") {
+    document.getElementById("codigo").focus();
+  } else if (nombrePaso === "contra") {
+    document.getElementById("nuevaContra").focus();
+  } else {
+    correoRecuperacion.focus();
+  }
+}
+
+
+// Revisar correo para recuperación
+formularioRecuperacion.addEventListener("submit", (evento) => {
+  evento.preventDefault();
+  quitarError(correoRecuperacion, "errorCorreoRecuperacion");
+  mensajeRecuperacion.textContent = "";
+
+  if (!correoRecuperacion.value.trim()) {
+    mostrarError(
+      correoRecuperacion,
+      "errorCorreoRecuperacion",
+      "Ingresa el correo de tu cuenta."
+    );
+    correoRecuperacion.focus();
+    return;
+  }
+
+  if (!correoEsValido(correoRecuperacion.value)) {
+    mostrarError(
+      correoRecuperacion,
+      "errorCorreoRecuperacion",
+      "Ingresa un correo válido de hasta 254 caracteres."
+    );
+    correoRecuperacion.focus();
+    return;
+  }
+
+  mostrarPasoRecuperacion("codigo");
+  mensajeRecuperacion.textContent = "Código de prueba: 123456.";
+});
+
+
+// Revisar el código de prueba
+document.getElementById("botonValidarCodigo").addEventListener("click", () => {
+  const codigo = document.getElementById("codigo");
+  quitarError(codigo, "errorCodigo");
+
+  if (codigo.value !== "123456") {
+    mostrarError(codigo, "errorCodigo", "El código de prueba es 123456.");
+    codigo.focus();
+    return;
+  }
+
+  mostrarPasoRecuperacion("contra");
+  mensajeRecuperacion.textContent = "";
+});
+
+
+// Volver a mostrar el código de prueba
+document.getElementById("botonReenviar").addEventListener("click", () => {
+  mensajeRecuperacion.textContent = "Código de prueba: 123456.";
+});
+
+
+// Mostrar u ocultar contra nueva
+document.getElementById("botonMostrarContra").addEventListener("click", (evento) => {
+  const nuevaContra = document.getElementById("nuevaContra");
+  cambiarVisibilidadContra(nuevaContra, evento.currentTarget);
+});
+
+
+// Guardar contra nueva
+document.getElementById("botonGuardarContra").addEventListener("click", () => {
+  const nuevaContra = document.getElementById("nuevaContra");
+  quitarError(nuevaContra, "errorNuevaContra");
+
+  const tieneMayuscula = /[A-Z]/.test(nuevaContra.value);
+  const tieneMinuscula = /[a-z]/.test(nuevaContra.value);
+  const tieneNumero = /[0-9]/.test(nuevaContra.value);
+  const tieneLongitudValida =
+    nuevaContra.value.length >= 8 && nuevaContra.value.length <= 64;
+
+  if (!tieneLongitudValida || !tieneMayuscula || !tieneMinuscula || !tieneNumero) {
+    mostrarError(
+      nuevaContra,
+      "errorNuevaContra",
+      "Usa de 8 a 64 caracteres, con mayúscula, minúscula y número."
+    );
+    nuevaContra.focus();
+    return;
+  }
+
+  mensajeRecuperacion.textContent = "Contraseña actualizada en la demostración.";
+});
+
+
+// Quitar error al escribir
+document.querySelectorAll("input").forEach((campo) => {
+  campo.addEventListener("input", () => {
+    campo.removeAttribute("aria-invalid");
+  });
+});
+
+

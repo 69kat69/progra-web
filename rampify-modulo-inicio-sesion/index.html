@@ -1,68 +1,225 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#174d3d"><title>Acceso | Rampify</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#174d3d">
+  <title>Acceso | Rampify</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<main class="layout">
-  <aside class="visual" aria-label="Rampify, accesibilidad urbana">
-    <a class="brand" href="#" aria-label="Rampify, inicio"><span class="brand-mark" aria-hidden="true">R</span><span><b>Rampify</b><small>Accesibilidad urbana</small></span></a>
-    <div class="visual-copy">
-      <div class="art" aria-hidden="true"><span class="ring ring-a"></span><span class="ring ring-b"></span><span class="map-pin"><i></i></span><span class="dot dot-a"></span><span class="dot dot-b"></span></div>
-      <p class="eyebrow">UNA CIUDAD PARA TODAS LAS PERSONAS</p>
-      <h1>Tu ciudad,<br><em>más accesible.</em></h1>
-      <p class="tagline">Reporta barreras urbanas y acompaña el cambio hacia espacios que todas las personas puedan disfrutar.</p>
-    </div>
-    <div class="visual-footer"><span></span> Conectando personas con una ciudad mejor</div>
-  </aside>
-  <section class="content">
-    <div class="content-inner">
-      <a class="brand mobile-brand" href="#" aria-label="Rampify, inicio"><span class="brand-mark" aria-hidden="true">R</span><span><b>Rampify</b><small>Accesibilidad urbana</small></span></a>
-      <section id="vistaLogin" aria-labelledby="tituloLogin">
-        <header class="form-heading"><span class="eyebrow">QUÉ BUENO VERTE</span><h2 id="tituloLogin">Iniciar sesión</h2><p>Ingresa a tu cuenta para continuar.</p></header>
-        <form id="formularioLogin" novalidate>
-          <div class="field"><label for="correo">Correo electrónico</label><input id="correo" name="correo" type="email" inputmode="email" autocomplete="username" maxlength="254" placeholder="nombre@ejemplo.com" aria-describedby="errorCorreo" required><span class="field-error" id="errorCorreo"></span></div>
-          <div class="field">
-            <div class="label-line"><label for="contrasena">Contraseña</label><button class="link" type="button" data-vista="recuperacion">¿Olvidaste tu contraseña?</button></div>
-            <div class="password-wrap"><input id="contrasena" name="contrasena" type="password" autocomplete="current-password" minlength="8" maxlength="64" placeholder="Ingresa tu contraseña" aria-describedby="errorContrasena" required><button id="botonMostrar" class="eye" type="button" aria-label="Mostrar contraseña"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.2-6 9.5-6 9.5 6 9.5 6-3.2 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.5"/></svg></button></div>
-            <span class="field-error" id="errorContrasena"></span>
-          </div>
-          <div id="mensajeLogin" class="message" role="status" aria-live="polite"></div>
-          <button class="primary" type="submit">Iniciar sesión <span aria-hidden="true">→</span></button>
-          <p class="notice">La validación de acceso estará disponible al integrar el servidor.</p>
-        </form>
-      </section>
-      <section id="vistaRecuperacion" aria-labelledby="tituloRecuperacion" hidden>
-        <button class="back" type="button" data-vista="login">← <span>Volver al inicio de sesión</span></button>
-        <div class="recovery-icon" aria-hidden="true">✉</div>
-        <header class="form-heading"><span class="eyebrow">RECUPERACIÓN DE CUENTA</span><h2 id="tituloRecuperacion">Restablecer contraseña</h2><p>Te guiaremos para recuperar el acceso a tu cuenta.</p></header>
-        <form id="formularioRecuperacion" novalidate>
-          <div class="step" data-step="correo">
-            <div class="field"><label for="correoRecuperacion">Correo electrónico</label><input id="correoRecuperacion" type="email" inputmode="email" autocomplete="email" maxlength="254" placeholder="nombre@ejemplo.com" aria-describedby="errorCorreoRecuperacion" required><span class="field-error" id="errorCorreoRecuperacion"></span></div>
-            <p class="help">Te enviaremos un código de 6 dígitos con vigencia de 10 minutos.</p>
-            <button class="primary" type="submit">Continuar <span aria-hidden="true">→</span></button>
-          </div>
-          <div class="step" data-step="codigo" hidden>
-            <div class="field"><label for="codigo">Código de verificación</label><input class="code" id="codigo" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="••••••" aria-describedby="errorCodigo"><span class="field-error" id="errorCodigo"></span></div>
-            <p class="help">Ingresa el código de 6 dígitos. Vence en 10 minutos.</p>
-            <button class="primary" type="button" id="botonValidarCodigo">Validar código <span aria-hidden="true">→</span></button>
-            <button class="secondary" type="button" id="botonReenviar">Reenviar código</button>
-          </div>
-          <div class="step" data-step="contrasena" hidden>
-            <div class="field"><label for="nuevaContrasena">Nueva contraseña</label><div class="password-wrap"><input id="nuevaContrasena" type="password" autocomplete="new-password" minlength="8" maxlength="64" placeholder="Crea una contraseña segura" aria-describedby="errorNuevaContrasena"><button id="botonMostrarNueva" class="eye" type="button" aria-label="Mostrar contraseña"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.2-6 9.5-6 9.5 6 9.5 6-3.2 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.5"/></svg></button></div><span class="field-error" id="errorNuevaContrasena"></span></div>
-            <p class="help">De 8 a 64 caracteres, con al menos una mayúscula, una minúscula y un número.</p>
-            <button class="primary" type="button" id="botonGuardarContrasena">Guardar contraseña <span aria-hidden="true">→</span></button>
-          </div>
-          <div id="mensajeRecuperacion" class="message" role="status" aria-live="polite"></div>
-          <p class="notice">El envío del correo y la validación se habilitarán al integrar el servidor.</p>
-        </form>
-      </section>
-      <footer class="content-footer"><span>© 2026 Rampify</span><span>Hecho para una ciudad accesible</span></footer>
-    </div>
-  </section>
-</main>
-<script src="login.js"></script>
+  <main class="layout">
+    <aside class="visual" aria-label="Rampify, accesibilidad urbana">
+      <a class="brand" href="#" aria-label="Rampify, inicio">
+        <span class="brand-mark" aria-hidden="true">R</span>
+        <span>
+          <b>Rampify</b>
+          <small>Accesibilidad urbana</small>
+        </span>
+      </a>
+
+      <div class="visual-copy">
+        <div class="art" aria-hidden="true">
+          <span class="ring ring-a"></span>
+          <span class="ring ring-b"></span>
+          <span class="map-pin"><i></i></span>
+          <span class="dot dot-a"></span>
+          <span class="dot dot-b"></span>
+        </div>
+        <p class="eyebrow">UNA CIUDAD PARA TODAS LAS PERSONAS</p>
+        <h1>Tu ciudad,<br><em>más accesible.</em></h1>
+        <p class="tagline">
+          Reporta barreras urbanas y acompaña el cambio hacia espacios que
+          todas las personas puedan disfrutar.
+        </p>
+      </div>
+
+      <div class="visual-footer">
+        <span></span>
+        Conectando personas con una ciudad mejor
+      </div>
+    </aside>
+
+    <section class="content">
+      <div class="content-inner">
+        <a class="brand mobile-brand" href="#" aria-label="Rampify, inicio">
+          <span class="brand-mark" aria-hidden="true">R</span>
+          <span>
+            <b>Rampify</b>
+            <small>Accesibilidad urbana</small>
+          </span>
+        </a>
+
+        <section id="vistaLogin" aria-labelledby="tituloLogin">
+          <header class="form-heading">
+            <span class="eyebrow">QUÉ BUENO VERTE</span>
+            <h2 id="tituloLogin">Iniciar sesión</h2>
+            <p>Ingresa a tu cuenta para continuar.</p>
+          </header>
+
+          <form id="formularioLogin" novalidate>
+            <div class="field">
+              <label for="correo">Correo electrónico</label>
+              <input
+                id="correo"
+                name="correo"
+                type="email"
+                inputmode="email"
+                autocomplete="username"
+                maxlength="254"
+                placeholder="nombre@ejemplo.com"
+                aria-describedby="errorCorreo"
+                required
+              >
+              <span class="field-error" id="errorCorreo"></span>
+            </div>
+
+            <div class="field">
+              <div class="label-line">
+                <label for="contra">Contraseña</label>
+                <button class="link" type="button" data-vista="recuperacion">
+                  ¿Olvidaste tu contraseña?
+                </button>
+              </div>
+              <div class="campo-contra">
+                <input
+                  id="contra"
+                  name="contra"
+                  type="password"
+                  autocomplete="current-password"
+                  minlength="8"
+                  maxlength="64"
+                  placeholder="Ingresa tu contraseña"
+                  aria-describedby="errorContra"
+                  required
+                >
+                <button
+                  id="botonMostrar"
+                  class="eye"
+                  type="button"
+                  aria-label="Mostrar contraseña"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M2.5 12s3.2-6 9.5-6 9.5 6 9.5 6-3.2 6-9.5 6-9.5-6-9.5-6Z" />
+                    <circle cx="12" cy="12" r="2.5" />
+                  </svg>
+                </button>
+              </div>
+              <span class="field-error" id="errorContra"></span>
+            </div>
+
+            <div id="mensajeLogin" class="message" role="status" aria-live="polite"></div>
+            <button class="primary" type="submit">
+              Iniciar sesión <span aria-hidden="true">→</span>
+            </button>
+          </form>
+        </section>
+
+        <section id="vistaRecuperacion" aria-labelledby="tituloRecuperacion" hidden>
+          <button class="back" type="button" data-vista="login">
+            ← <span>Volver al inicio de sesión</span>
+          </button>
+          <div class="recovery-icon" aria-hidden="true">✉</div>
+
+          <header class="form-heading">
+            <span class="eyebrow">RECUPERACIÓN DE CUENTA</span>
+            <h2 id="tituloRecuperacion">Restablecer contraseña</h2>
+            <p>Te guiaremos para recuperar el acceso a tu cuenta.</p>
+          </header>
+
+          <form id="formularioRecuperacion" novalidate>
+            <div class="step" data-step="correo">
+              <div class="field">
+                <label for="correoRecuperacion">Correo electrónico</label>
+                <input
+                  id="correoRecuperacion"
+                  type="email"
+                  inputmode="email"
+                  autocomplete="email"
+                  maxlength="254"
+                  placeholder="nombre@ejemplo.com"
+                  aria-describedby="errorCorreoRecuperacion"
+                  required
+                >
+                <span class="field-error" id="errorCorreoRecuperacion"></span>
+              </div>
+              <p class="help">Esta es una vista de demostración. Usa el código 123456.</p>
+              <button class="primary" type="submit">
+                Continuar <span aria-hidden="true">→</span>
+              </button>
+            </div>
+
+            <div class="step" data-step="codigo" hidden>
+              <div class="field">
+                <label for="codigo">Código de verificación</label>
+                <input
+                  class="code"
+                  id="codigo"
+                  type="text"
+                  inputmode="numeric"
+                  autocomplete="one-time-code"
+                  maxlength="6"
+                  placeholder="••••••"
+                  aria-describedby="errorCodigo"
+                >
+                <span class="field-error" id="errorCodigo"></span>
+              </div>
+              <p class="help">Escribe el código de prueba 123456.</p>
+              <button class="primary" type="button" id="botonValidarCodigo">
+                Validar código <span aria-hidden="true">→</span>
+              </button>
+              <button class="secondary" type="button" id="botonReenviar">
+                Reenviar código
+              </button>
+            </div>
+
+            <div class="step" data-step="contra" hidden>
+              <div class="field">
+                <label for="nuevaContra">Nueva contraseña</label>
+                <div class="campo-contra">
+                  <input
+                    id="nuevaContra"
+                    type="password"
+                    autocomplete="new-password"
+                    minlength="8"
+                    maxlength="64"
+                    placeholder="Crea una contraseña segura"
+                    aria-describedby="errorNuevaContra"
+                  >
+                  <button
+                    id="botonMostrarContra"
+                    class="eye"
+                    type="button"
+                    aria-label="Mostrar contraseña"
+                  >
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M2.5 12s3.2-6 9.5-6 9.5 6 9.5 6-3.2 6-9.5 6-9.5-6-9.5-6Z" />
+                      <circle cx="12" cy="12" r="2.5" />
+                    </svg>
+                  </button>
+                </div>
+                <span class="field-error" id="errorNuevaContra"></span>
+              </div>
+              <p class="help">
+                De 8 a 64 caracteres, con al menos una mayúscula, una minúscula y un número.
+              </p>
+              <button class="primary" type="button" id="botonGuardarContra">
+                Guardar contraseña <span aria-hidden="true">→</span>
+              </button>
+            </div>
+
+            <div id="mensajeRecuperacion" class="message" role="status" aria-live="polite"></div>
+          </form>
+        </section>
+
+        <footer class="content-footer">
+          <span>© 2026 Rampify</span>
+          <span>Hecho para una ciudad accesible</span>
+        </footer>
+      </div>
+    </section>
+  </main>
+  <script src="login.js"></script>
 </body>
 </html>
+

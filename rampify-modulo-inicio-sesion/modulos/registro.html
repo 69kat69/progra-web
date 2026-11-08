@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      Rampify | Crear cuenta
+    </title>
+    <link rel="stylesheet" href="app.css">
+  </head>
+  <body>
+    <main class="contenido pagina-registro">
+      <a href="../index.html">
+        ← Volver al inicio
+      </a>
+      <section class="pantalla activa">
+        <div class="encabezado">
+          <p class="sobretitulo">
+            RAMPIFY
+          </p>
+          <h1>
+            Crear cuenta
+          </h1>
+          <p>
+            Elige el tipo de cuenta y completa los datos.
+          </p>
+        </div>
+        <form class="tarjeta formulario" id="formRegistro">
+          <label>
+            Tipo de cuenta
+            <select id="tipoCuenta">
+              <option value="ciudadano">
+                Usuario de la app
+              </option>
+              <option value="empleado">
+                Solicitar cuenta de empleado
+              </option>
+              <option value="admin">
+                Registro por invitación de administrador
+              </option>
+            </select>
+          </label>
+          <label>
+            Nombre
+            <input id="nombreRegistro" minlength="2" maxlength="64" required>
+          </label>
+          <label>
+            Correo
+            <input id="correoRegistro" type="email" maxlength="254" required>
+          </label>
+          <label>
+            Contra
+            <input id="contraRegistro" type="password" minlength="8" maxlength="64" required>
+          </label>
+          <small>
+            La contra debe tener de 8 a 64 caracteres, una mayúscula, una minúscula y un número.
+          </small>
+          <label id="campoInvitacion" hidden>
+            Código de invitación de muestra
+            <input id="codigoInvitacion">
+          </label>
+          <label class="check">
+            <input id="aceptaAviso" type="checkbox" required>
+            Leí y acepto el aviso de privacidad.
+          </label>
+          <p class="tarjeta">
+            Aviso de privacidad: en esta demostración, los datos solo se guardan en este navegador y se usan para mostrar el flujo de registro.
+          </p>
+          <button class="boton principal" type="submit">
+            Enviar registro
+          </button>
+          <p id="mensajeRegistro" class="mensaje" aria-live="polite">
+          </p>
+        </form>
+      </section>
+    </main>
+    <script type="module" src="js/registro.js">
+    </script>
+  </body>
+</html>

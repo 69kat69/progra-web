@@ -144,6 +144,12 @@ function mostrarPasoRecuperacion(nombrePaso) {
 }
 
 
+let codigoPrueba = "123456";
+let intentosCodigo = 0;
+let venceCodigo = 0;
+let reenviosCodigo = [];
+let codigoBloqueado = false;
+
 // Revisar correo para recuperación
 formularioRecuperacion.addEventListener("submit", (evento) => {
   evento.preventDefault();
@@ -171,7 +177,11 @@ formularioRecuperacion.addEventListener("submit", (evento) => {
   }
 
   mostrarPasoRecuperacion("codigo");
-  mensajeRecuperacion.textContent = "Código de prueba: 123456.";
+  intentosCodigo = 0;
+  codigoBloqueado = false;
+  codigoPrueba = "123456";
+  venceCodigo = Date.now() + 10 * 60 * 1000;
+  mensajeRecuperacion.textContent = "Si el correo existe, recibirá un código. Código de demostración: 123456 (dura 10 minutos).";
 });
 
 
@@ -180,8 +190,18 @@ document.getElementById("botonValidarCodigo").addEventListener("click", () => {
   const codigo = document.getElementById("codigo");
   quitarError(codigo, "errorCodigo");
 
-  if (codigo.value !== "123456") {
-    mostrarError(codigo, "errorCodigo", "El código de prueba es 123456.");
+  if (codigoBloqueado) {
+    mensajeRecuperacion.textContent = "Código bloqueado. Solicita uno nuevo.";
+    return;
+  }
+  if (Date.now() > venceCodigo || codigo.value !== codigoPrueba) {
+    intentosCodigo += 1;
+    if (intentosCodigo >= 5) {
+      codigoBloqueado = true;
+      mostrarError(codigo, "errorCodigo", "Código bloqueado. Solicita uno nuevo.");
+    } else {
+      mostrarError(codigo, "errorCodigo", "Código incorrecto o vencido. Intentos restantes: " + (5 - intentosCodigo) + ".");
+    }
     codigo.focus();
     return;
   }
@@ -193,7 +213,20 @@ document.getElementById("botonValidarCodigo").addEventListener("click", () => {
 
 // Volver a mostrar el código de prueba
 document.getElementById("botonReenviar").addEventListener("click", () => {
-  mensajeRecuperacion.textContent = "Código de prueba: 123456.";
+  const ahora = Date.now();
+  reenviosCodigo = reenviosCodigo.filter((hora) => ahora - hora < 60 * 60 * 1000);
+  if (reenviosCodigo.length >= 3) {
+    const minutos = Math.ceil((60 * 60 * 1000 - (ahora - reenviosCodigo[0])) / 60000);
+    mensajeRecuperacion.textContent = "Límite de reenvíos alcanzado. Intenta de nuevo en " + minutos + " minutos.";
+    return;
+  }
+  reenviosCodigo.push(ahora);
+  intentosCodigo = 0;
+  codigoBloqueado = false;
+  venceCodigo = ahora + 10 * 60 * 1000;
+  codigoPrueba = String(Math.floor(100000 + Math.random() * 900000));
+  document.getElementById("codigo").value = "";
+  mensajeRecuperacion.textContent = "Código reenviado. Código de demostración: " + codigoPrueba + " (dura 10 minutos).";
 });
 
 
@@ -225,7 +258,8 @@ document.getElementById("botonGuardarContra").addEventListener("click", () => {
     return;
   }
 
-  mensajeRecuperacion.textContent = "Contraseña actualizada en la demostración.";
+  codigoBloqueado = true;
+  mensajeRecuperacion.textContent = "Contra actualizada en la demostración. Vuelve al inicio de sesión.";
 });
 
 

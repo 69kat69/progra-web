@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      Rampify | Módulos
+    </title>
+    <link rel="stylesheet" href="app.css">
+  </head>
+  <body>
+    <div class="app">
+      <aside class="menu">
+        <a class="marca" href="app.html">
+          <span>
+            R
+          </span>
+          <b>
+            Rampify
+          </b>
+        </a>
+        <p class="subtitulo-menu">
+          Accesibilidad urbana
+        </p>
+        <label class="etiqueta-rol" for="rolDemo">
+          Vista de demostración
+        </label>
+        <select id="rolDemo">
+          <option value="ciudadano">
+            Usuario de la app
+          </option>
+          <option value="empleado">
+            Empleado
+          </option>
+          <option value="admin">
+            Administrador
+          </option>
+        </select>
+        <nav id="navegacion" aria-label="Secciones del sistema">
+          <button data-seccion="inicio">
+            Inicio
+          </button>
+          <button data-seccion="crear-reporte" data-roles="ciudadano">
+            Crear reporte
+          </button>
+          <button data-seccion="reportes">
+            Reportes
+          </button>
+          <button data-seccion="solicitudes" data-roles="ciudadano,admin">
+            Solicitudes
+          </button>
+          <button data-seccion="perfil">
+            Mi perfil
+          </button>
+          <button data-seccion="organizaciones" data-roles="admin">
+            Organizaciones
+          </button>
+          <button data-seccion="catalogos" data-roles="admin">
+            Catálogos
+          </button>
+          <button data-seccion="usuarios" data-roles="admin">
+            Usuarios
+          </button>
+          <button data-seccion="dashboard" data-roles="empleado,admin">
+            Estadísticas
+          </button>
+        </nav>
+        <a class="salir" href="../index.html">
+          Volver al inicio
+        </a>
+      </aside>
+      <main class="contenido">
+        <header class="barra-superior">
+          <div>
+            <span class="punto">
+            </span>
+            Vista de demostración del front
+          </div>
+          <span id="nombreRol">
+            Usuario de la app
+          </span>
+        </header>
+        <section class="pantalla activa" id="inicio">
+          <div class="encabezado">
+            <p class="sobretitulo">
+              RAMPIFY
+            </p>
+            <h1>
+              Hola, bienvenido
+            </h1>
+            <p>
+              Elige una sección del menú para recorrer el sistema.
+            </p>
+          </div>
+          <div class="tarjetas-resumen">
+            <article>
+              <span>
+                Reportes registrados
+              </span>
+              <strong id="totalReportes">
+                0
+              </strong>
+            </article>
+            <article>
+              <span>
+                Pendientes
+              </span>
+              <strong id="totalPendientes">
+                0
+              </strong>
+            </article>
+            <article>
+              <span>
+                En proceso
+              </span>
+              <strong id="totalProceso">
+                0
+              </strong>
+            </article>
+          </div>
+          <div class="tarjeta">
+            <h2>
+              Qué puedes hacer aquí
+            </h2>
+            <p>
+              Crear y consultar reportes, revisar solicitudes, editar el perfil y explorar las herramientas de administración. Los cambios se guardan solo en este navegador como demostración.
+            </p>
+          </div>
+        </section>
+        <section class="pantalla" id="crear-reporte">
+          <div class="encabezado">
+            <p class="sobretitulo">
+              MÓDULO DE REPORTES
+            </p>
+            <h1>
+              Crear reporte
+            </h1>
+            <p>
+              Describe la barrera y agrega una imagen para documentarla.
+            </p>
+          </div>
+          <form class="tarjeta formulario" id="formCrearReporte">
+            <label>
+              Tipo de problema
+              <select id="tipoReporte" required>
+              </select>
+            </label>
+            <label>
+              Descripción
+              <textarea id="descripcionReporte" minlength="10" maxlength="500" required placeholder="Describe lo que ocurre (10 a 500 caracteres)">
+              </textarea>
+              <small id="contadorDescripcion">
+                0 / 500
+              </small>
+            </label>
+            <label>
+              Imagen JPG o PNG (máximo 5 MB)
+              <input id="imagenReporte" type="file" accept="image/jpeg,image/png" required><img id="previewImagen" alt="Vista previa de la imagen seleccionada" hidden>
+            </label>
+            <div class="mapa-demo">
+              <span>
+                📍
+              </span>
+              <div>
+                <b>
+                  Ubicación aproximada
+                </b>
+                <p>
+                  Para esta demostración, captura las coordenadas.
+                </p>
+              </div>
+            </div>
+            <div class="dos-columnas">
+              <label>
+                Latitud
+                <input id="latitud" type="number" min="-90" max="90" step="any" value="19.4326" required>
+              </label>
+              <label>
+                Longitud
+                <input id="longitud" type="number" min="-180" max="180" step="any" value="-99.1332" required>
+              </label>
+            </div>
+            <p class="mensaje" id="mensajeCrear" aria-live="polite">
+            </p>
+            <button class="boton principal" type="submit">
+              Enviar reporte
+            </button>
+          </form>
+        </section>
+        <section class="pantalla" id="reportes">
+          <div class="encabezado">
+            <p class="sobretitulo">
+              MÓDULO DE REPORTES
+            </p>
+            <h1>
+              Reportes
+            </h1>
+            <p>
+              Busca por folio o filtra por estado.
+            </p>
+          </div>
+          <div class="tarjeta filtros">
+            <label id="vistaCiudadano">
+              Ver
+              <select id="filtroVistaCiudadano">
+                <option value="historial">
+                  Mis reportes
+                </option>
+                <option value="cercanos">
+                  Reportes cercanos
+                </option>
+              </select>
+            </label>
+            <input id="buscarReporte" type="search" placeholder="Buscar folio o descripción">
+            <select id="filtroEstado">
+              <option value="">
+                Todos los estados
+              </option>
+              <option>
+                Pendiente
+              </option>
+              <option>
+                En proceso
+              </option>
+              <option>
+                Solucionado
+              </option>
+              <option>
+                Rechazado
+              </option>
+            </select>
+            <select id="filtroTipo">
+              <option value="">
+                Todos los tipos
+              </option>
+            </select>
+          </div>
+          <div class="tarjeta tabla-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    Folio
+                  </th>
+                  <th>
+                    Tipo
+                  </th>
+                  <th>
+                    Descripción
+                  </th>
+                  <th>
+                    Estado
+                  </th>
+                  <th>
+                    Fecha
+                  </th>
+                  <th>
+                    Acción
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="listaReportes">
+              </tbody>
+            </table>
+            <p id="sinReportes" class="vacio" hidden>
+              No hay reportes para mostrar.
+            </p>
+          </div>
+          <div class="mapa-estatico mapa-reportes">
+            <span>
+              ●
+            </span>
+            <span>
+              ●
+            </span>
+            <span>
+              ●
+            </span>
+            <span>
+              Mapa de reportes de muestra
+            </span>
+          </div>
+          <form class="tarjeta formulario" id="formDenuncia">
+            <h2>
+              Denunciar un reporte
+            </h2>
+            <label>
+              Folio
+              <select id="reporteDenunciado">
+              </select>
+            </label>
+            <label>
+              Motivo
+              <select id="motivoDenuncia">
+                <option>
+                  Mal uso de la app
+                </option>
+                <option>
+                  Incumple Términos y Condiciones
+                </option>
+              </select>
+            </label>
+            <label>
+              Comentario (opcional)
+              <textarea id="comentarioDenuncia" maxlength="300">
+              </textarea>
+            </label>
+            <button class="boton">
+              Enviar denuncia
+            </button>
+            <p id="mensajeDenuncia" class="mensaje">
+            </p>
+          </form>
+        </section>
+        <section class="pantalla" id="solicitudes">
+          <div class="encabezado">
+            <p class="sobretitulo">
+              MÓDULO DE SOLICITUDES
+            </p>
+            <h1>
+              Solicitudes de eliminación
+            </h1>
+            <p>
+              Solicita eliminar un reporte propio o revisa las solicitudes recibidas.
+            </p>
+          </div>
+          <form class="tarjeta formulario" id="formSolicitud">
+            <label>
+              Reporte
+              <select id="reporteSolicitud" required>
+              </select>
+            </label>
+            <label>
+              Motivo
+              <textarea id="motivoSolicitud" minlength="10" maxlength="300" required>
+              </textarea>
+            </label>
+            <button class="boton principal">
+              Enviar solicitud
+            </button>
+            <p id="mensajeSolicitud" class="mensaje" aria-live="polite">
+            </p>
+          </form>
+          <div class="tarjeta tabla-wrap">
+            <h2>
+              Solicitudes registradas
+            </h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    Folio
+                  </th>
+                  <th>
+                    Motivo
+                  </th>
+                  <th>
+                    Estado
+                  </th>
+                  <th>
+                    Acciones
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="listaSolicitudes">
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section class="pantalla" id="perfil">
+          <div class="encabezado">
+            <p class="sobretitulo">
+              MÓDULO DE PERFIL
+            </p>
+            <h1>
+              Mi perfil
+            </h1>
+            <p>
+              Actualiza tus datos y preferencias.
+            </p>
+          </div>
+          <div class="rejilla-perfil">
+            <form class="tarjeta formulario" id="formPerfil">
+              <h2>
+                Datos de cuenta
+              </h2>
+              <label>
+                Nombre
+                <input id="nombrePerfil" minlength="2" maxlength="64" required>
+              </label>
+              <button class="boton principal">
+                Guardar datos
+              </button>
+              <p class="mensaje" id="mensajePerfil">
+              </p>
+            </form>
+            <form class="tarjeta formulario" id="formCorreo">
+              <h2>
+                Cambiar correo
+              </h2>
+              <label>
+                Correo nuevo
+                <input id="correoNuevo" type="email" maxlength="254" required>
+              </label>
+              <button class="boton" type="button" id="enviarCodigoCorreo">
+                Enviar código
+              </button>
+              <small>
+                En esta vista el código aparece en pantalla.
+              </small>
+              <label>
+                Código
+                <input id="codigoCorreo" inputmode="numeric" maxlength="6">
+              </label>
+              <button class="boton principal" type="submit">
+                Confirmar correo
+              </button>
+              <p id="mensajeCorreo" class="mensaje">
+              </p>
+            </form>
+            <form class="tarjeta formulario" id="formContra">
+              <h2>
+                Cambiar contra
+              </h2>
+              <label>
+                Contra actual
+                <input id="contraActual" type="password" required>
+              </label>
+              <label>
+                Contra nueva
+                <input id="contraNueva" type="password" minlength="8" maxlength="64" required>
+              </label>
+              <small>
+                8 a 64 caracteres, con mayúscula, minúscula y número.
+              </small>
+              <button class="boton">
+                Actualizar contra
+              </button>
+              <p class="mensaje" id="mensajeContra">
+              </p>
+            </form>
+            <div class="tarjeta formulario">
+              <h2>
+                Notificaciones
+              </h2>
+              <label class="check">
+                <input id="notifEstado" type="checkbox" checked>
+                Cambios de estado del reporte
+              </label>
+              <label class="check">
+                <input id="notifBaja" type="checkbox" checked>
+                Solicitudes de eliminación
+              </label>
+              <button id="guardarNotif" class="boton">
+                Guardar preferencias
+              </button>
+              <p id="mensajeNotif" class="mensaje">
+              </p>
+            </div>
+            <div class="tarjeta formulario">
+              <h2>
+                Cuenta
+              </h2>
+              <p id="estadoEliminacion">
+                Tu cuenta está activa.
+              </p>
+              <button id="botonEliminarCuenta" class="boton peligro">
+                Programar eliminación
+              </button>
+              <button id="botonCancelarEliminacion" class="boton" hidden>
+                Cancelar eliminación
+              </button>
+              <p id="mensajeCuenta" class="mensaje">
+              </p>
+            </div>
+          </div>
+        </section>
+        <section class="pantalla" id="organizaciones">
+          <div class="encabezado">
+            <p class="sobretitulo">
+              MÓDULO DE ORGANIZACIONES
+            </p>
+            <h1>
+              Solicitudes de empleados
+            </h1>
+            <p>
+              Aprueba o rechaza peticiones de registro.
+            </p>
+          </div>
+          <div class="tarjeta tabla-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    Nombre
+                  </th>
+                  <th>
+                    Correo
+                  </th>
+                  <th>
+                    Estado
+                  </th>
+                  <th>
+                    Acciones
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="listaEmpleados">
+              </tbody>
+            </table>
+          </div>
+          <form class="tarjeta formulario" id="formInvitacion">
+            <h2>
+              Invitar administrador
+            </h2>
+            <label>
+              Correo
+              <input id="correoInvitacion" type="email" required maxlength="254">
+            </label>
+            <button class="boton principal">
+              Crear invitación de muestra
+            </button>
+            <p id="mensajeInvitacion" class="mensaje">
+            </p>
+          </form>
+        </section>
+        <section class="pantalla" id="catalogos">
+          <div class="encabezado">
+            <p class="sobretitulo">
+              MÓDULO DE CATÁLOGOS
+            </p>
+            <h1>
+              Tipos de problema
+            </h1>
+            <p>
+              Agrega, edita o retira opciones del formulario de reporte.
+            </p>
+          </div>
+          <form class="tarjeta formulario en-linea" id="formCatalogo">
+            <label>
+              Nuevo tipo
+              <input id="nombreTipo" minlength="2" maxlength="60" required>
+            </label>
+            <button class="boton principal">
+              Agregar
+            </button>
+            <p id="mensajeCatalogo" class="mensaje">
+            </p>
+          </form>
+          <div class="tarjeta tabla-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    Tipo de problema
+                  </th>
+                  <th>
+                    Estado
+                  </th>
+                  <th>
+                    Acciones
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="listaCatalogo">
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section class="pantalla" id="usuarios">
+          <div class="encabezado">
+            <p class="sobretitulo">
+              MÓDULO DE MODERACIÓN
+            </p>
+            <h1>
+              Usuarios
+            </h1>
+            <p>
+              Administra cuentas y envía alertas de demostración.
+            </p>
+          </div>
+          <div class="tarjeta tabla-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    Nombre
+                  </th>
+                  <th>
+                    Correo
+                  </th>
+                  <th>
+                    Estado
+                  </th>
+                  <th>
+                    Acciones
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="listaUsuarios">
+              </tbody>
+            </table>
+          </div>
+          <form class="tarjeta formulario" id="formAlerta">
+            <label>
+              Mensaje de alerta
+              <textarea id="textoAlerta" minlength="10" maxlength="300" required>
+              </textarea>
+            </label>
+            <button class="boton principal">
+              Enviar alerta de muestra
+            </button>
+            <p id="mensajeAlerta" class="mensaje">
+            </p>
+          </form>
+        </section>
+        <section class="pantalla" id="dashboard">
+          <div class="encabezado">
+            <p class="sobretitulo">
+              MÓDULO DE DASHBOARD
+            </p>
+            <h1>
+              Estadísticas
+            </h1>
+            <p>
+              Resumen de reportes para la vista actual.
+            </p>
+          </div>
+          <div class="tarjeta filtros">
+            <label>
+              Desde
+              <input id="fechaDesde" type="date">
+            </label>
+            <label>
+              Hasta
+              <input id="fechaHasta" type="date">
+            </label>
+            <label>
+              Estado
+              <select id="filtroDashboard">
+                <option value="">
+                  Todos
+                </option>
+                <option>
+                  Pendiente
+                </option>
+                <option>
+                  En proceso
+                </option>
+                <option>
+                  Solucionado
+                </option>
+                <option>
+                  Rechazado
+                </option>
+              </select>
+            </label>
+            <label>
+              Tipo
+              <select id="tipoDashboard">
+                <option value="">
+                  Todos
+                </option>
+              </select>
+            </label>
+            <button id="aplicarFiltro" class="boton principal">
+              Aplicar
+            </button>
+          </div>
+          <div id="mensajeDashboard" class="mensaje">
+          </div>
+          <div class="tarjetas-resumen">
+            <article>
+              <span>
+                Total reportes
+              </span>
+              <strong id="dashTotal">
+                0
+              </strong>
+            </article>
+            <article>
+              <span>
+                Activos
+              </span>
+              <strong id="dashActivos">
+                0
+              </strong>
+            </article>
+            <article>
+              <span>
+                Usuarios activos
+              </span>
+              <strong id="usuariosActivos">
+                24
+              </strong>
+            </article>
+          </div>
+          <div class="tarjeta">
+            <h2>
+              Reportes por estado
+            </h2>
+            <div id="barrasEstado" class="barras">
+            </div>
+            <h2>
+              Tipos de problema
+            </h2>
+            <div id="barrasTipo" class="barras">
+            </div>
+            <h2>
+              Mapa de concentración
+            </h2>
+            <div class="mapa-estatico">
+              <span>
+                ●
+              </span>
+              <span>
+                ●
+              </span>
+              <span>
+                ●
+              </span>
+              <span>
+                Zona centro · Los puntos representan reportes de muestra
+              </span>
+            </div>
+          </div>
+        </section>
+        <footer>
+          Rampify · Interfaz de demostración
+        </footer>
+      </main>
+    </div>
+    <script type="module" src="js/app.js">
+    </script>
+  </body>
+</html>
